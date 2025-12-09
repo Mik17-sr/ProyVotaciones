@@ -12,7 +12,7 @@ import jakarta.inject.Named;
 @SessionScoped
 public class RegistroPersonaBean implements Serializable {
 	private PersonaDTO persona = new PersonaDTO();
-	private ArrayList<PersonaDTO> listaPersonas = new ArrayList<E>();
+	private ArrayList<PersonaDTO> listaPersonas = new ArrayList<>();
 	
 	public RegistroPersonaBean() {
 		super();
