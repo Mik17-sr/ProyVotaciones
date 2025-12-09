@@ -11,6 +11,7 @@ import jakarta.inject.Named;
 @Named
 @SessionScoped
 public class RegistroPersonaBean implements Serializable {
+	private static final long serialVersionUID = 3383865556109331597L;
 	private PersonaDTO persona = new PersonaDTO();
 	private ArrayList<PersonaDTO> listaPersonas = new ArrayList<>();
 	

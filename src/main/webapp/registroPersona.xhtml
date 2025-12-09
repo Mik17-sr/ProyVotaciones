@@ -4,39 +4,51 @@
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core"
       xmlns:p="http://primefaces.org/ui">
-<head>
+<h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
-</head>
-<body>
+<title>Registro Persona</title>
+</h:head>
+<h:body>
 	<h:form>
 
-		<h:panelGrid columns="2">
+    <p:panel header="Registro de Persona" style="width:400px; margin:auto;">
 
-			<h:outputLabel value="Nombres:" />
-			<h:inputText value="#{registrarPersonaBean.persona.nombres}" />
+        <p:panelGrid columns="2" columnClasses="label,value" style="width:100%;" >
 
-			<h:outputLabel value="Apellidos:" />
-			<h:inputText value="#{registrarPersonaBean.persona.apellidos}" />
+            <h:outputLabel value="Nombres:" />
+            <p:inputText value="#{registroPersonaBean.persona.nombres}" required="true" />
 
-			<h:outputLabel value="ID:" />
-			<h:inputText value="#{registrarPersonaBean.persona.id}" />
+            <h:outputLabel value="Apellidos:" />
+            <p:inputText value="#{registroPersonaBean.persona.apellidos}" required="true" />
 
-			<h:outputLabel value="Teléfono:" />
-			<h:inputText value="#{registrarPersonaBean.persona.telefono}" />
+            <h:outputLabel value="ID:" />
+            <p:inputText value="#{registroPersonaBean.persona.id}" required="true" />
 
-			<h:outputLabel value="Sexo:" />
-			<h:selectOneMenu value="#{registrarPersonaBean.persona.sexo}">
-				<f:selectItem itemValue="M" itemLabel="Masculino" />
-				<f:selectItem itemValue="F" itemLabel="Femenino" />
-			</h:selectOneMenu>
+            <h:outputLabel value="Teléfono:" />
+            <p:inputText value="#{registroPersonaBean.persona.telefono}" />
 
-		</h:panelGrid>
+            <h:outputLabel value="Sexo:" />
+            <p:selectOneMenu value="#{registroPersonaBean.persona.sexo}" style="width:100%">
+                <f:selectItem itemValue="M" itemLabel="Masculino" />
+                <f:selectItem itemValue="F" itemLabel="Femenino" />
+            </p:selectOneMenu>
 
-		<h:commandButton value="Registrar"
-			action="#{registrarPersonaBean.registrar}" />
+        </p:panelGrid>
 
-	</h:form>
+        <br/>
 
-</body>
+        <p:commandButton 
+            value="Registrar" 
+            action="#{registroPersonaBean.registrarVotante}" 
+            update="@form"
+            icon="pi pi-save"
+            styleClass="p-button-success"
+        />
+
+    </p:panel>
+
+</h:form>
+
+
+</h:body>
 </html>
