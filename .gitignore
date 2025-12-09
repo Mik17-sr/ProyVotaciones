@@ -1,0 +1,15 @@
+/target/
+*.class
+*.war
+*.ear
+*.jar
+.project
+.classpath
+.settings/
+bin/
+Thumbs.db
+*.log
+*.tmp
+/.metadata/
+*.deploy
+*.cache
