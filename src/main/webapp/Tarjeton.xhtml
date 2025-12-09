@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Catálogo de Marcas de Motos</title>
+    <h:outputStylesheet library="primefaces" name="primeflex/primeflex.css" />
+</h:head>
+
+<h:body>
+    <h:form id="formDisplay">
+
+        <p:panel header="🖼️ Catálogo de Marcas de Motos" style="margin: 20px auto; width: 90%;">
+            
+            <!-- === DEBUG: muestra cuantos objetos encontró el bean ===
+                 Deja esto para probar; si muestra >0, el bean y la carga funcionan -->
+            <h:panelGroup style="margin-bottom:10px;">
+                <h:outputText value="Motos encontradas: " />
+                <h:outputText value="#{votacionBean.motos.size()}" />
+            </h:panelGroup>
+            <!-- ======================================================= -->
+
+            <p:dataView value="#{votacionBean.motos}" var="moto" layout="grid"
+                        styleClass="responsive-grid-dataview">
+
+                <!-- cada ítem del grid -->
+                <div class="p-col-12 p-md-6 p-lg-4 p-xl-3" style="padding: 10px;">
+                    <p:card style="height: 100%; text-align: center;">
+
+                        <!-- Marca (Título visible) -->
+                        <h:outputText value="#{moto.marca}" style="font-size:1.1rem; font-weight:700; display:block; margin-top:8px;" />
+
+                        <!-- Subtítulo (País) -->
+                        <h:outputText value="País de Origen: #{moto.pais}" style="display:block; margin-bottom:8px; color:#666;" />
+
+                        <!-- Imagen -->
+                        <div class="moto-imagen" style="height: 120px; margin: 10px 0;">
+                            <!-- IMPORTANTE: name debe ser solo el nombre del archivo si library='img' -->
+                            <p:graphicImage library="img"
+                name="/resources/#{moto.urlImg}"
+                style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+                        </div>
+
+                        <!-- Tarjetón -->
+                        <p:panel style="margin-top: 8px; border: none;">
+                            <h:outputText value="Tarjetón N°: #{moto.tarjeton}" style="font-weight: bold; color: #555;" />
+                        </p:panel>
+
+                    </p:card>
+                </div>
+
+            </p:dataView>
+        </p:panel>
+
+    </h:form>
+</h:body>
+</html>
