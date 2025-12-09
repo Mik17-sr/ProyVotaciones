@@ -1,18 +1,103 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="http://primefaces.org/ui">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>INDEX MODIFICADO POR EL MAURO</title>
-</head>
-<body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
 
+<h:head>
+    <title>Sistema de Votaciones</title>
+    <h:outputStylesheet library="primefaces" name="primeicons/primeicons.css" />
+    <h:outputStylesheet library="primefaces" name="primeflex/primeflex.css" />
+</h:head>
 
+<h:body>
+    <p:panel header="Bienvenido al Sistema de Votaciones" style="width: 80%; margin: 20px auto;">
+        
+        <p:panelGrid columns="1" layout="grid" style="width: 100%;">
+            
+            <p:card>
+                <f:facet name="title"> 
+                    Candidatos de las votaciones
+                </f:facet>
+                
+                <p>
+                    En estas votaciones tenemos los siguientes candidatos.
+                </p>
+                <p>
+                    Cada voto cuenta. ¡Tu participación es esencial!
+                </p>
+            </p:card>
+            
+            <p:separator />
+            
+            <div class="ui-g">
+                
+                <div class="ui-g-12 ui-md-6" style="padding: 10px;">
+                    <p:button href="registroPersona.xhtml" value="Registrar Nuevo Usuario" 
+                              icon="pi pi-user-plus" style="width: 100%; margin-bottom: 5px;" />
+                    <h:outputText value="Necesario para poder emitir un voto." styleClass="ui-text-caption" />
+                </div>
+                
+                <div class="ui-g-12 ui-md-6" style="padding: 10px;">
+                    <p:button href="tarjeton.xhtml" value="Ir a Votaciones" 
+                              icon="pi pi-check-square" style="width: 100%; margin-bottom: 5px;" />
+                    <h:outputText value="Emite tu voto aquí (requiere estar registrado)." styleClass="ui-text-caption" />
+                </div>
+                
+            </div>
+            
+            <p:separator />
+            
+            <h:outputText value="Lista de Candidatos" 
+                          style="font-style: italic; display: block; text-align: center; font-size: 1.2em; margin-bottom: 10px;" />
 
-<h1>MIAU GRRRRRR DAME UN GRRRR</h1>
-</body>
+            <h:form id="motoForm">
+                <p:dataTable id="motosTableIndex" 
+                             var="moto" 
+                             value="#{tarjetonController.listaMotos}" 
+                             rows="5" 
+                             paginator="true"
+                             widgetVar="motosTableWVIndex" 
+                             emptyMessage="No se encontraron motos."
+                             style="margin-top: 10px;">
+
+                    <f:facet name="header">
+                        Candidatos Disponibles (Usa el filtro de País)
+                    </f:facet>
+
+                    <p:column headerText="Imagen" width="80" style="text-align: center;">
+                        <p:graphicImage value="#{moto.urlImg}" style="width: 60px; height: auto;" />
+                    </p:column>
+                    
+                    <p:column headerText="Marca" sortBy="#{moto.marca}" filterBy="#{moto.marca}" filterMatchMode="contains">
+                        <h:outputText value="#{moto.marca}" />
+                    </p:column>
+
+                    <p:column headerText="País" 
+                              sortBy="#{moto.pais}" 
+                              filterBy="#{moto.pais}" 
+                              filterMatchMode="exact" 
+                              filterStyle="width: 95%;"> 
+                        
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('motosTableWVIndex').filter()" style="width: 100%;">
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" />
+                                <f:selectItems value="#{tarjetonController.paisesDisponibles}" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        
+                        <h:outputText value="#{moto.pais}" />
+                    </p:column>
+
+                    <p:column headerText="# Tarjetón" sortBy="#{moto.tarjeton}" width="100" style="text-align: center;">
+                        <h:outputText value="#{moto.tarjeton}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+            </p:panelGrid>
+
+    </p:panel>
+</h:body>
 </html>

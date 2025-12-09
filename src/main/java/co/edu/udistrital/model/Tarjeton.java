@@ -9,6 +9,7 @@ public class Tarjeton implements Serializable {
 	
 	public Tarjeton() {
 		super();
+		this.motos = new ArrayList<>();
 	}
 
 	public Tarjeton(ArrayList<MotoDTO> motos) {
