@@ -1,53 +1,133 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Registro Persona</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Registro Persona</title>
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="formRegistro">
+		<p:panel header="Registro de Persona"
+			style="width:450px; margin:auto;">
+			<p:messages autoUpdate="true" closable="true" />
+			
+			<p:panelGrid columns="2" columnClasses="label,value"
+				style="width:100%;">
 
-    <p:panel header="Registro de Persona" style="width:400px; margin:auto;">
+				<h:outputLabel for="nombres" value="Nombres:" />
+                <p:inputText id="nombres"
+                             value="#{registroPersonaBean.persona.nombres}"
+                             required="true"
+                             requiredMessage="El nombre es obligatorio.">
+                    <f:ajax event="blur" render="msgs" />
+                </p:inputText>
 
-        <p:panelGrid columns="2" columnClasses="label,value" style="width:100%;" >
+				<h:outputLabel for="apellidos" value="Apellidos:" />
+                <p:inputText id="apellidos"
+                             value="#{registroPersonaBean.persona.apellidos}"
+                             required="true"
+                             requiredMessage="El apellido es obligatorio.">
+                    <f:ajax event="blur" render="msgs" />
+                </p:inputText>
+                
+                <h:outputLabel for="identificacion" value="ID:" />
+                <p:inputText id="identificacion"
+                             value="#{registroPersonaBean.persona.id}"
+                             required="true"
+                             requiredMessage="El ID es obligatorio."
+                             validatorMessage="El ID debe ser numérico.">
+                    <f:validateRegex pattern="^[0-9]+$" />
+                    <f:ajax event="blur" render="msgs" />
+                </p:inputText>
+                
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <p:inputText id="telefono"
+                             value="#{registroPersonaBean.persona.telefono}"
+                             validatorMessage="El teléfono debe tener solo números."
+                             required="true"
+                             requiredMessage="El teléfono es obligatorio.">
+                    <f:validateRegex pattern="^[0-9]*$" />
+                    <f:ajax event="blur" render="msgs" />
+                </p:inputText>
 
-            <h:outputLabel value="Nombres:" />
-            <p:inputText value="#{registroPersonaBean.persona.nombres}" required="true" />
+				<h:outputLabel for="sexo" value="Sexo:" />
+                <p:selectOneMenu id="sexo"
+                                 value="#{registroPersonaBean.persona.sexo}"
+                                 required="true"
+                                 requiredMessage="Seleccione un sexo.">
+                    <f:selectItem itemValue="" itemLabel="Seleccione..." />
+                    <f:selectItem itemValue="M" itemLabel="Masculino" />
+                    <f:selectItem itemValue="F" itemLabel="Femenino" />
+                    <f:ajax event="change" render="msgs" />
+                </p:selectOneMenu>
 
-            <h:outputLabel value="Apellidos:" />
-            <p:inputText value="#{registroPersonaBean.persona.apellidos}" required="true" />
+			</p:panelGrid>
+			<br />
+			<p:commandButton value="Registrar"
+				action="#{registroPersonaBean.registrarVotante}" update="@form"
+				icon="pi pi-save" styleClass="p-button-success">
+				<p:resetInput target="formRegistro" />
+			</p:commandButton>
 
-            <h:outputLabel value="ID:" />
-            <p:inputText value="#{registroPersonaBean.persona.id}" required="true" />
+		</p:panel>
+		<br />
+		<br />
 
-            <h:outputLabel value="Teléfono:" />
-            <p:inputText value="#{registroPersonaBean.persona.telefono}" />
+		<p:panel style="width:450px; margin:auto;"
+			rendered="#{registroPersonaBean.registroExitoso}">
+			<h3 style="color: green; text-align: center;">¡Persona
+				registrada con éxito!</h3>
+		</p:panel>
 
-            <h:outputLabel value="Sexo:" />
-            <p:selectOneMenu value="#{registroPersonaBean.persona.sexo}" style="width:100%">
-                <f:selectItem itemValue="M" itemLabel="Masculino" />
-                <f:selectItem itemValue="F" itemLabel="Femenino" />
-            </p:selectOneMenu>
+		<p:panel style="width:450px; margin:auto;"
+			rendered="#{not registroPersonaBean.registroExitoso 
+                        and registroPersonaBean.persona.id != null}">
+			<h3 style="color: red; text-align: center;">Error: el ID
+				ingresado ya existe</h3>
+		</p:panel>
 
-        </p:panelGrid>
+		<br />
+		<br />
 
-        <br/>
+		<p:panel header="Listado de Personas"
+			style="width:700px; margin:auto;">
 
-        <p:commandButton 
-            value="Registrar" 
-            action="#{registroPersonaBean.registrarVotante}" 
-            update="@form"
-            icon="pi pi-save"
-            styleClass="p-button-success"
-        />
+			<p:dataTable value="#{registroPersonaBean.listaPersonas}" var="p"
+				bordered="true">
 
-    </p:panel>
+				<p:column headerText="ID">
+					<h:outputText value="#{p.id}" />
+				</p:column>
 
-</h:form>
+				<p:column headerText="Nombre Completo">
+					<h:outputText value="#{p.nombres} #{p.apellidos}" />
+				</p:column>
+
+				<p:column headerText="Teléfono">
+					<h:outputText value="#{p.telefono}" />
+				</p:column>
+
+				<p:column headerText="Sexo">
+					<h:outputText value="#{p.sexo}" />
+				</p:column>
+
+				<p:column headerText="¿Ha votado?">
+					<h:outputText
+						value="#{registroPersonaBean.haVotado(p) ? 'Sí' : 'No'}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</p:panel>
+
+
+
+	</h:form>
+	<div class="ui-g-12 ui-md-6" style="padding: 10px;">
+		<p:button href="index.xhtml" value="Volver a pagina Inicio"
+			icon="pi pi-user-plus" style="width: 20%; margin-bottom: 5px;" />
+	</div>
 
 
 </h:body>

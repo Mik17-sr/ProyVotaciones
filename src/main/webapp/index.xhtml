@@ -13,14 +13,11 @@
 
 <h:body>
     <p:panel header="Bienvenido al Sistema de Votaciones" style="width: 80%; margin: 20px auto;">
-        
         <p:panelGrid columns="1" layout="grid" style="width: 100%;">
-            
             <p:card>
                 <f:facet name="title"> 
                     Candidatos de las votaciones
                 </f:facet>
-                
                 <p>
                     En estas votaciones tenemos los siguientes candidatos.
                 </p>
@@ -28,9 +25,7 @@
                     Cada voto cuenta. ¡Tu participación es esencial!
                 </p>
             </p:card>
-            
             <p:separator />
-            
             <div class="ui-g">
                 
                 <div class="ui-g-12 ui-md-6" style="padding: 10px;">
@@ -38,7 +33,6 @@
                               icon="pi pi-user-plus" style="width: 100%; margin-bottom: 5px;" />
                     <h:outputText value="Necesario para poder emitir un voto." styleClass="ui-text-caption" />
                 </div>
-                
                 <div class="ui-g-12 ui-md-6" style="padding: 10px;">
                     <p:button href="tarjeton.xhtml" value="Ir a Votaciones" 
                               icon="pi pi-check-square" style="width: 100%; margin-bottom: 5px;" />
@@ -46,9 +40,7 @@
                 </div>
                 
             </div>
-            
             <p:separator />
-            
             <h:outputText value="Lista de Candidatos" 
                           style="font-style: italic; display: block; text-align: center; font-size: 1.2em; margin-bottom: 10px;" />
 
@@ -67,7 +59,7 @@
                     </f:facet>
 
                     <p:column headerText="Imagen" width="80" style="text-align: center;">
-                        <p:graphicImage value="#{moto.urlImg}" style="width: 60px; height: auto;" />
+                        <p:graphicImage value="/resources/#{moto.urlImg}" style="width: 60px; height: auto;" />
                     </p:column>
                     
                     <p:column headerText="Marca" sortBy="#{moto.marca}" filterBy="#{moto.marca}" filterMatchMode="contains">
