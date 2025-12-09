@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<h:form>
+
+		<h:panelGrid columns="2">
+
+			<h:outputLabel value="Nombres:" />
+			<h:inputText value="#{registrarPersonaBean.persona.nombres}" />
+
+			<h:outputLabel value="Apellidos:" />
+			<h:inputText value="#{registrarPersonaBean.persona.apellidos}" />
+
+			<h:outputLabel value="ID:" />
+			<h:inputText value="#{registrarPersonaBean.persona.id}" />
+
+			<h:outputLabel value="Teléfono:" />
+			<h:inputText value="#{registrarPersonaBean.persona.telefono}" />
+
+			<h:outputLabel value="Sexo:" />
+			<h:selectOneMenu value="#{registrarPersonaBean.persona.sexo}">
+				<f:selectItem itemValue="M" itemLabel="Masculino" />
+				<f:selectItem itemValue="F" itemLabel="Femenino" />
+			</h:selectOneMenu>
+
+		</h:panelGrid>
+
+		<h:commandButton value="Registrar"
+			action="#{registrarPersonaBean.registrar}" />
+
+	</h:form>
+
+</body>
+</html>
