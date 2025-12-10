@@ -7,53 +7,72 @@
 <h:head>
     <title>Catálogo de Marcas de Motos</title>
     <h:outputStylesheet library="primefaces" name="primeflex/primeflex.css" />
+    <style>
+        .moto-card {
+            margin: 10px;
+            height: 400px;
+        }
+        
+        .ui-datagrid-content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .moto-imagen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            margin: 15px 0;
+        }
+    </style>
 </h:head>
 
 <h:body>
     <h:form id="formDisplay">
 
-        <p:panel header="🖼️ Catálogo de Marcas de Motos" style="margin: 20px auto; width: 90%;">
+        <p:panel header="Catálogo de Marcas de Motos" style="margin: 20px auto; width: 90%;">
             
-            <!-- === DEBUG: muestra cuantos objetos encontró el bean ===
-                 Deja esto para probar; si muestra >0, el bean y la carga funcionan -->
-            <h:panelGroup style="margin-bottom:10px;">
+            <h:panelGroup style="margin-bottom:20px; display:block;">
                 <h:outputText value="Motos encontradas: " />
-                <h:outputText value="#{votacionBean.motos.size()}" />
+                <h:outputText value="#{tarjetonController.listaMotos.size()}" />
             </h:panelGroup>
-            <!-- ======================================================= -->
+            
+            <p:dataGrid value="#{tarjetonController.listaMotos}" 
+                        var="moto" 
+                        columns="4" 
+                        layout="grid"
+                        paginator="false">
+                
+                <p:card styleClass="moto-card">
+                    
+                    <h:outputText value="#{moto.marca}" 
+                                  style="font-size:1.2rem; font-weight:700; display:block; margin-bottom:10px;" />
 
-            <p:dataView value="#{votacionBean.motos}" var="moto" layout="grid"
-                        styleClass="responsive-grid-dataview">
+                    <h:outputText value="País de Origen: #{moto.pais}" 
+                                  style="display:block; margin-bottom:10px; color:#666; font-size:0.9rem;" />
 
-                <!-- cada ítem del grid -->
-                <div class="p-col-12 p-md-6 p-lg-4 p-xl-3" style="padding: 10px;">
-                    <p:card style="height: 100%; text-align: center;">
+                    <div class="moto-imagen">
+                        <p:graphicImage library="img"
+                                        value="/resources/#{moto.urlImg}"
+                                        style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+                    </div>
 
-                        <!-- Marca (Título visible) -->
-                        <h:outputText value="#{moto.marca}" style="font-size:1.1rem; font-weight:700; display:block; margin-top:8px;" />
+                    <h:panelGroup layout="block" style="margin-top: 15px; padding: 10px; background-color: #f5f5f5; border-radius: 4px;">
+                        <h:outputText value="Tarjetón N°: #{moto.tarjeton}" 
+                                      style="font-weight: bold; color: #555;" />
+                    </h:panelGroup>
 
-                        <!-- Subtítulo (País) -->
-                        <h:outputText value="País de Origen: #{moto.pais}" style="display:block; margin-bottom:8px; color:#666;" />
+                </p:card>
+                
+            </p:dataGrid>
 
-                        <!-- Imagen -->
-                        <div class="moto-imagen" style="height: 120px; margin: 10px 0;">
-                            <!-- IMPORTANTE: name debe ser solo el nombre del archivo si library='img' -->
-                            <p:graphicImage library="img"
-                name="/resources/#{moto.urlImg}"
-                style="max-width: 100%; max-height: 100%; object-fit: contain;" />
-                        </div>
-
-                        <!-- Tarjetón -->
-                        <p:panel style="margin-top: 8px; border: none;">
-                            <h:outputText value="Tarjetón N°: #{moto.tarjeton}" style="font-weight: bold; color: #555;" />
-                        </p:panel>
-
-                    </p:card>
-                </div>
-
-            </p:dataView>
         </p:panel>
 
     </h:form>
+    <div class="ui-g-12 ui-md-6" style="padding: 10px;">
+		<p:button href="index.xhtml" value="Volver a pagina Inicio"
+			icon="pi pi-user-plus" style="width: 20%; margin-bottom: 5px;" />
+	</div>
 </h:body>
 </html>
