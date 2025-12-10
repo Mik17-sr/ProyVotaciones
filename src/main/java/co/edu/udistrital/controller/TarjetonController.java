@@ -18,10 +18,9 @@ import co.edu.udistrital.model.ListaVotos;
 @Named
 @SessionScoped
 public class TarjetonController implements Serializable {
+	private static final long serialVersionUID = 3012172844893472191L;
 
-    private static final long serialVersionUID = 1L;
-
-    @Inject
+	@Inject
     private RegistroPersonaBean registroPersonaBean;
 
     private Tarjeton tarjeton;
