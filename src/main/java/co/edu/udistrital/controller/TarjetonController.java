@@ -2,6 +2,7 @@ package co.edu.udistrital.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -87,8 +88,8 @@ public class TarjetonController implements Serializable {
             mostrarMensaje("Error", "Debe validar la cédula", FacesMessage.SEVERITY_ERROR);
             return;
         }
-
-        Voto voto = new Voto(tarjetonSeleccionado, motoSeleccionada, personaActual);
+        
+        Voto voto = new Voto(tarjetonSeleccionado, motoSeleccionada, personaActual, new Date());
         registroPersonaBean.getListaVotos().getListaVotos().add(voto);
 
         mostrarMensaje("Éxito", "Voto registrado correctamente por " + personaActual.getNombres(),

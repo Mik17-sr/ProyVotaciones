@@ -11,56 +11,70 @@
 		<p:panel header="Registro de Persona"
 			style="width:450px; margin:auto;">
 			<p:messages autoUpdate="true" closable="true" />
-			
+
 			<p:panelGrid columns="2" columnClasses="label,value"
 				style="width:100%;">
 
 				<h:outputLabel for="nombres" value="Nombres:" />
-                <p:inputText id="nombres"
-                             value="#{registroPersonaBean.persona.nombres}"
-                             required="true"
-                             requiredMessage="El nombre es obligatorio.">
-                    <f:ajax event="blur" render="msgs" />
-                </p:inputText>
+				<p:inputText id="nombres"
+					value="#{registroPersonaBean.persona.nombres}" required="true"
+					requiredMessage="El nombre es obligatorio.">
+					<f:ajax event="blur" render="msgs" />
+				</p:inputText>
 
 				<h:outputLabel for="apellidos" value="Apellidos:" />
-                <p:inputText id="apellidos"
-                             value="#{registroPersonaBean.persona.apellidos}"
-                             required="true"
-                             requiredMessage="El apellido es obligatorio.">
-                    <f:ajax event="blur" render="msgs" />
-                </p:inputText>
-                
-                <h:outputLabel for="identificacion" value="ID:" />
-                <p:inputText id="identificacion"
-                             value="#{registroPersonaBean.persona.id}"
-                             required="true"
-                             requiredMessage="El ID es obligatorio."
-                             validatorMessage="El ID debe ser numérico.">
-                    <f:validateRegex pattern="^[0-9]+$" />
-                    <f:ajax event="blur" render="msgs" />
-                </p:inputText>
-                
-                <h:outputLabel for="telefono" value="Teléfono:" />
-                <p:inputText id="telefono"
-                             value="#{registroPersonaBean.persona.telefono}"
-                             validatorMessage="El teléfono debe tener solo números."
-                             required="true"
-                             requiredMessage="El teléfono es obligatorio.">
-                    <f:validateRegex pattern="^[0-9]*$" />
-                    <f:ajax event="blur" render="msgs" />
-                </p:inputText>
+				<p:inputText id="apellidos"
+					value="#{registroPersonaBean.persona.apellidos}" required="true"
+					requiredMessage="El apellido es obligatorio.">
+					<f:ajax event="blur" render="msgs" />
+				</p:inputText>
+
+				<h:outputLabel for="identificacion" value="ID:" />
+				<p:inputText id="identificacion"
+					value="#{registroPersonaBean.persona.id}" required="true"
+					requiredMessage="El ID es obligatorio."
+					validatorMessage="El ID debe ser numérico.">
+					<f:validateRegex pattern="^[0-9]+$" />
+					<f:ajax event="blur" render="msgs" />
+				</p:inputText>
+
+				<h:outputLabel for="telefono" value="Teléfono:" />
+				<p:inputText id="telefono"
+					value="#{registroPersonaBean.persona.telefono}"
+					validatorMessage="El teléfono debe tener solo números."
+					required="true" requiredMessage="El teléfono es obligatorio.">
+					<f:validateRegex pattern="^[0-9]*$" />
+					<f:ajax event="blur" render="msgs" />
+				</p:inputText>
 
 				<h:outputLabel for="sexo" value="Sexo:" />
-                <p:selectOneMenu id="sexo"
-                                 value="#{registroPersonaBean.persona.sexo}"
-                                 required="true"
-                                 requiredMessage="Seleccione un sexo.">
-                    <f:selectItem itemValue="" itemLabel="Seleccione..." />
-                    <f:selectItem itemValue="M" itemLabel="Masculino" />
-                    <f:selectItem itemValue="F" itemLabel="Femenino" />
-                    <f:ajax event="change" render="msgs" />
-                </p:selectOneMenu>
+				<p:selectOneMenu id="sexo"
+					value="#{registroPersonaBean.persona.sexo}" required="true"
+					requiredMessage="Seleccione un sexo.">
+					<f:selectItem itemValue="" itemLabel="Seleccione..." />
+					<f:selectItem itemValue="M" itemLabel="Masculino" />
+					<f:selectItem itemValue="F" itemLabel="Femenino" />
+					<f:ajax event="change" render="msgs" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="fechaExp" value="Fecha de Expedición:" />
+				<p:datePicker id="fechaExp"
+					value="#{registroPersonaBean.persona.fechaExpedicion}"
+					required="true"
+					requiredMessage="La fecha de expedición es obligatoria."
+					pattern="dd/MM/yyyy" showIcon="true"
+					maxdate="#{registroPersonaBean.hoy}">
+					<f:ajax event="dateSelect" render="msgs" />
+				</p:datePicker>
+
+
+				<h:outputLabel for="lugarExp" value="Lugar de Expedición:" />
+				<p:inputText id="lugarExp"
+					value="#{registroPersonaBean.persona.lugarExpedicion}"
+					required="true"
+					requiredMessage="El lugar de expedición es obligatorio.">
+					<f:ajax event="blur" render="msgs" />
+				</p:inputText>
 
 			</p:panelGrid>
 			<br />
@@ -71,8 +85,8 @@
 			</p:commandButton>
 
 		</p:panel>
-		<br/>
-		<br/>
+		<br />
+		<br />
 
 		<p:panel style="width:450px; margin:auto;"
 			rendered="#{registroPersonaBean.registroExitoso}">
@@ -87,11 +101,11 @@
 				ingresado ya existe</h3>
 		</p:panel>
 
-		<br/>
-		<br/>
+		<br />
+		<br />
 
 		<p:panel header="Listado de Personas"
-			style="width:700px; margin:auto;">
+			style="width:900px; margin:auto;">
 
 			<p:dataTable value="#{registroPersonaBean.listaPersonas}" var="p"
 				bordered="true">
@@ -112,10 +126,29 @@
 					<h:outputText value="#{p.sexo}" />
 				</p:column>
 
+
+
+				<p:column headerText="Fecha Expedición">
+					<h:outputText value="#{p.fechaExpedicion}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Lugar Expedición">
+					<h:outputText value="#{p.lugarExpedicion}" />
+				</p:column>
+
 				<p:column headerText="¿Ha votado?">
 					<h:outputText
 						value="#{registroPersonaBean.haVotado(p) ? 'Sí' : 'No'}" />
 				</p:column>
+
+				<p:column headerText="Fecha voto">
+					<h:outputText
+						value="#{registroPersonaBean.obtenerVoto(p) != null ? registroPersonaBean.obtenerVoto(p).fechaVoto : 'No ha votado'}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
+
 
 			</p:dataTable>
 

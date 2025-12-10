@@ -2,6 +2,7 @@ package co.edu.udistrital.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import co.edu.udistrital.model.ListaVotos;
 import co.edu.udistrital.model.PersonaDTO;
@@ -19,6 +20,7 @@ public class RegistroPersonaBean implements Serializable {
 	private ArrayList<PersonaDTO> listaPersonas = new ArrayList<>();
 	private boolean registroExitoso = false;
 	private ListaVotos listaVotos = new ListaVotos();
+	private Date hoy = new Date();
 	
 	public RegistroPersonaBean() {
 		super();
@@ -60,6 +62,14 @@ public class RegistroPersonaBean implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public Date getHoy() {
+		return hoy;
+	}
+
+	public void setHoy(Date hoy) {
+		this.hoy = hoy;
+	}
 
 	public void registrarVotante() {
 		for(PersonaDTO p : listaPersonas) {
@@ -87,4 +97,15 @@ public class RegistroPersonaBean implements Serializable {
 	    }
 	    return false;
 	}
+	
+	public Voto obtenerVoto(PersonaDTO persona) {
+	    Voto voto = null;
+	    for(Voto v : listaVotos.getListaVotos()) {
+	    	if(persona.equals(v.getPersona())) {
+	    		voto = v;
+	    	}
+	    }
+	    return voto;
+	}
+
 }
