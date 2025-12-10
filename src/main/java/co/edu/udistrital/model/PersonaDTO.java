@@ -7,22 +7,22 @@ public class PersonaDTO {
 	private String apellidos;
 	private String id;
 	private String telefono;
-	private Date fechaExpedicion;
 	private String lugarExpedicion;
 	private String sexo;
+	private Date fechaNacimiento;
 	
 	public PersonaDTO() {
 		super();
 	}
 	
-	public PersonaDTO(String nombres, String apellidos, String id, String telefono, Date fechaExpedicion,
+	public PersonaDTO(String nombres, String apellidos, String id, String telefono, Date fechaNacimiento,
 			String lugarExpedicion, String sexo) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.id = id;
 		this.telefono = telefono;
-		this.fechaExpedicion = fechaExpedicion;
+		this.fechaNacimiento = fechaNacimiento;
 		this.lugarExpedicion = lugarExpedicion;
 		this.sexo = sexo;
 	}
@@ -52,12 +52,12 @@ public class PersonaDTO {
 		this.telefono = telefono;
 	}
 
-	public Date getFechaExpedicion() {
-		return fechaExpedicion;
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
 	}
 
-	public void setFechaExpedicion(Date fechaExpedicion) {
-		this.fechaExpedicion = fechaExpedicion;
+	public void setFechaNacimiento(Date fechaExpedicion) {
+		this.fechaNacimiento = fechaExpedicion;
 	}
 
 	public String getLugarExpedicion() {

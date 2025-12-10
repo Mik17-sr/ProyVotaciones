@@ -57,11 +57,11 @@
 					<f:ajax event="change" render="msgs" />
 				</p:selectOneMenu>
 
-				<h:outputLabel for="fechaExp" value="Fecha de Expedición:" />
+				<h:outputLabel for="fechaExp" value="Fecha de Nacimiento:" />
 				<p:datePicker id="fechaExp"
-					value="#{registroPersonaBean.persona.fechaExpedicion}"
+					value="#{registroPersonaBean.persona.fechaNacimiento}"
 					required="true"
-					requiredMessage="La fecha de expedición es obligatoria."
+					requiredMessage="La fecha de nacimiento es obligatoria."
 					pattern="dd/MM/yyyy" showIcon="true"
 					maxdate="#{registroPersonaBean.hoy}">
 					<f:ajax event="dateSelect" render="msgs" />
@@ -128,8 +128,8 @@
 
 
 
-				<p:column headerText="Fecha Expedición">
-					<h:outputText value="#{p.fechaExpedicion}">
+				<p:column headerText="Fecha Nacimiento">
+					<h:outputText value="#{p.fechaNacimiento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
