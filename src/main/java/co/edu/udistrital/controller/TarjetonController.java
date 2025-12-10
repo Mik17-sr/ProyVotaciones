@@ -8,6 +8,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+
 import co.edu.udistrital.model.MotoDTO;
 import co.edu.udistrital.model.Tarjeton;
 import co.edu.udistrital.model.PersonaDTO;
@@ -28,51 +29,53 @@ public class TarjetonController implements Serializable {
     private Integer tarjetonSeleccionado;
     private String cedulaVotante;
     private boolean mostrarTarjetones = false;
-    private ArrayList<PersonaDTO> listaPersonas;
+    private PersonaDTO personaActual;
     private ListaVotos listaVotos;
 
     public TarjetonController() {
         tarjeton = new Tarjeton();
         tarjeton.cargarMotos();
         listaMotos = tarjeton.getMotos();
-        listaPersonas = new ArrayList<>();
         listaVotos = new ListaVotos(new ArrayList<>());
+        tarjetonSeleccionado = null;
     }
 
     public void validarCedula() {
-        PersonaDTO persona = null;
+
+        personaActual = null;
         for (PersonaDTO p : registroPersonaBean.getListaPersonas()) {
             if (p.getId().equals(cedulaVotante)) {
-                persona = p;
+                personaActual = p;
                 break;
             }
         }
-        if (persona == null) {
+
+        if (personaActual == null) {
             mostrarMensaje("Error", "Cédula no registrada", FacesMessage.SEVERITY_ERROR);
             mostrarTarjetones = false;
             return;
         }
-        if (registroPersonaBean.haVotado(persona)) {
-            mostrarMensaje("Error", "Ya votó", FacesMessage.SEVERITY_ERROR);
+
+        if (registroPersonaBean.haVotado(personaActual)) {
+            mostrarMensaje("Error", "La persona ya votó", FacesMessage.SEVERITY_ERROR);
             mostrarTarjetones = false;
             return;
         }
+
         mostrarTarjetones = true;
-        mostrarMensaje("Éxito", "Puede votar", FacesMessage.SEVERITY_INFO);
+        mostrarMensaje("Bienvenido", "Hola " + personaActual.getNombres(), FacesMessage.SEVERITY_INFO);
+    }
+
+    public void seleccionarTarjeton(Integer tarjeton) {
+        tarjetonSeleccionado = tarjeton;
     }
 
     public void registrarVoto() {
         if (tarjetonSeleccionado == null) {
-            mostrarMensaje("Error", "Seleccione una moto", FacesMessage.SEVERITY_ERROR);
+            mostrarMensaje("Error", "Debe seleccionar una moto", FacesMessage.SEVERITY_ERROR);
             return;
         }
-        PersonaDTO persona = null;
-        for (PersonaDTO p : registroPersonaBean.getListaPersonas()) {
-            if (p.getId().equals(cedulaVotante)) {
-                persona = p;
-                break;
-            }
-        }
+
         MotoDTO motoSeleccionada = null;
         for (MotoDTO m : listaMotos) {
             if (m.getTarjeton() == tarjetonSeleccionado) {
@@ -80,14 +83,24 @@ public class TarjetonController implements Serializable {
                 break;
             }
         }
-        Voto voto = new Voto(tarjetonSeleccionado, motoSeleccionada, persona);
+
+        if (personaActual == null) {
+            mostrarMensaje("Error", "Debe validar la cédula", FacesMessage.SEVERITY_ERROR);
+            return;
+        }
+
+        Voto voto = new Voto(tarjetonSeleccionado, motoSeleccionada, personaActual);
         registroPersonaBean.getListaVotos().getListaVotos().add(voto);
-        mostrarMensaje("Éxito", "Voto registrado para " + motoSeleccionada.getMarca(), FacesMessage.SEVERITY_INFO);
+
+        mostrarMensaje("Éxito", "Voto registrado correctamente por " + personaActual.getNombres(),
+                FacesMessage.SEVERITY_INFO);
+
         cedulaVotante = null;
+        personaActual = null;
         tarjetonSeleccionado = null;
         mostrarTarjetones = false;
     }
-
+    
     public ArrayList<String> getPaisesDisponibles() {
         ArrayList<String> paises = new ArrayList<>();
         for (MotoDTO moto : listaMotos) {
@@ -98,7 +111,7 @@ public class TarjetonController implements Serializable {
         paises.sort(null);
         return paises;
     }
-    
+
     private void mostrarMensaje(String titulo, String mensaje, FacesMessage.Severity tipo) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(tipo, titulo, mensaje));
     }
@@ -150,4 +163,13 @@ public class TarjetonController implements Serializable {
     public void setListaVotos(ListaVotos listaVotos) {
         this.listaVotos = listaVotos;
     }
+
+    public PersonaDTO getPersonaActual() {
+        return personaActual;
+    }
+
+    public void setPersonaActual(PersonaDTO personaActual) {
+        this.personaActual = personaActual;
+    }
 }
+

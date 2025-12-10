@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Catálogo de Marcas de Motos</title>
@@ -19,11 +19,13 @@
             align-items: center;
             text-align: center;
         }
+
         .ui-datagrid-content {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
+
         .moto-imagen img {
             width: 150px;
             height: 150px;
@@ -31,71 +33,71 @@
             background-color: #fff;
             padding: 5px;
         }
-        .select-radio {
-            margin-top: 10px;
-        }
     </style>
 </h:head>
 
 <h:body>
-<h:form id="formDisplay">
-    <p:panel header="Catálogo de Marcas de Motos" style="margin: 5px auto; width: 80%;">
+    <h:form id="formDisplay">
 
-        <h:panelGrid columns="3" style="margin-bottom:20px;">
-            <h:outputLabel value="Ingrese su cédula:" for="cedula" />
-            <p:inputText id="cedula" value="#{tarjetonController.cedulaVotante}" />
-            <p:commandButton value="Validar"
-                             action="#{tarjetonController.validarCedula}"
+        <p:messages id="msgs" showDetail="true" closable="true"/>
+
+        <p:panel header="Catálogo de Marcas de Motos" style="margin: 5px auto; width: 80%;">
+
+            <h:panelGrid columns="3" style="margin-bottom:20px;">
+                <h:outputLabel value="Ingrese su cédula:" for="cedula" />
+                <p:inputText id="cedula" value="#{tarjetonController.cedulaVotante}" />
+                <p:commandButton value="Validar"
+                                 action="#{tarjetonController.validarCedula}"
+                                 update="@form" icon="pi pi-search" />
+            </h:panelGrid>
+
+            <h:outputText value="Motos encontradas: #{tarjetonController.listaMotos.size()}"
+                          style="display:block; margin-bottom:10px;" />
+
+            <p:dataGrid value="#{tarjetonController.listaMotos}" var="moto"
+                        columns="4" layout="grid" paginator="false"
+                        rendered="#{tarjetonController.mostrarTarjetones}">
+
+                <p:card styleClass="moto-card">
+
+                    <h:outputText value="#{moto.marca}"
+                                  style="font-size:1.2rem; font-weight:700; margin-bottom:10px;" />
+
+                    <h:outputText value="País de Origen: #{moto.pais}"
+                                  style="display:block; margin-bottom:10px; color:#666; font-size:0.9rem;" />
+
+                    <div class="moto-imagen">
+                        <p:graphicImage library="img" value="/resources/#{moto.urlImg}"
+                            style="max-width:100%; max-height:100%; object-fit:contain;" />
+                    </div>
+
+                    <h:panelGroup layout="block"
+                        style="margin-top:15px; padding:10px; background-color:#f5f5f5; border-radius:4px;">
+                        <h:outputText value="Tarjetón N°: #{moto.tarjeton}"
+                            style="font-weight:bold; color:#555;" />
+                    </h:panelGroup>
+
+                    <p:commandButton value="#{tarjetonController.tarjetonSeleccionado == moto.tarjeton ? 'Seleccionado' : 'Seleccionar'}"
+                                     icon="#{tarjetonController.tarjetonSeleccionado == moto.tarjeton ? 'pi pi-check' : 'pi pi-circle'}"
+                                     styleClass="ui-button-success"
+                                     actionListener="#{tarjetonController.seleccionarTarjeton(moto.tarjeton)}"
+                                     update="@form"/>
+                </p:card>
+            </p:dataGrid>
+
+            <p:commandButton value="Votar" 
+                             action="#{tarjetonController.registrarVoto}" 
                              update="@form"
-                             icon="pi pi-search" />
-        </h:panelGrid>
+                             rendered="#{tarjetonController.mostrarTarjetones}" 
+                             icon="pi pi-check" 
+                             style="margin-top:20px;" />
 
-        <h:outputText value="Motos encontradas: #{tarjetonController.listaMotos.size()}" 
-                      style="display:block; margin-bottom:10px;" />
-
-        <p:dataGrid value="#{tarjetonController.listaMotos}" var="moto"
-                    columns="4" layout="grid" paginator="false"
-                    rendered="#{tarjetonController.mostrarTarjetones}">
-
-            <p:card styleClass="moto-card">
-
-                <h:outputText value="#{moto.marca}" 
-                              style="font-size:1.2rem; font-weight:700; margin-bottom:10px;" />
-
-                <h:outputText value="País de Origen: #{moto.pais}" 
-                              style="display:block; margin-bottom:10px; color:#666; font-size:0.9rem;" />
-
-                <div class="moto-imagen">
-                    <p:graphicImage library="img" value="/resources/#{moto.urlImg}" 
-                                    style="max-width:100%; max-height:100%; object-fit:contain;" />
-                </div>
-
-                <h:panelGroup layout="block" 
-                              style="margin-top:15px; padding:10px; background-color:#f5f5f5; border-radius:4px;">
-                    <h:outputText value="Tarjetón N°: #{moto.tarjeton}" 
-                                  style="font-weight:bold; color:#555;" />
-                </h:panelGroup>
-
-                <p:selectOneRadio value="#{tarjetonController.tarjetonSeleccionado}"
-                                  layout="grid" styleClass="select-radio">
-                    <f:selectItem itemValue="#{moto.tarjeton}" itemLabel="Seleccionar" />
-                </p:selectOneRadio>
-
-            </p:card>
-        </p:dataGrid>
-
-        <p:commandButton value="Votar" action="#{tarjetonController.registrarVoto}" 
-                         update="@form"
-                         rendered="#{tarjetonController.mostrarTarjetones}"
-                         icon="pi pi-check" style="margin-top:20px;" />
-
-    </p:panel>
-</h:form>
-
-<div class="ui-g-12 ui-md-6" style="padding: 10px;">
-    <p:button href="index.xhtml" value="Volver a pagina Inicio"
-              icon="pi pi-user-plus" style="width: 20%; margin-bottom: 5px;" />
-</div>
-
+        </p:panel>
+    </h:form>
+	<div class="ui-g-12 ui-md-6" style="padding: 10px;">
+		<p:button href="index.xhtml" value="Volver a pagina Inicio"
+			icon="pi pi-user-plus" style="width: 20%; margin-bottom: 5px;" />
+	</div>
 </h:body>
 </html>
+
