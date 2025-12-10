@@ -41,5 +41,6 @@ public class Tarjeton implements Serializable {
 	    motos.add(new MotoDTO("TVS", "India", 13, "img/tvs.png"));
 	    motos.add(new MotoDTO("Voge", "China", 14, "img/voge.png"));
 	    motos.add(new MotoDTO("Yamaha", "Japón", 15, "img/yamaha.png"));
+	    motos.add(new MotoDTO("Voto en Blanco", "Blanco", 16, "img/votoBlanco.png"));
 	}
 }

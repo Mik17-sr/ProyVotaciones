@@ -87,6 +87,4 @@ public class RegistroPersonaBean implements Serializable {
 	    }
 	    return false;
 	}
-	
-	
 }
