@@ -14,7 +14,6 @@ import co.edu.udistrital.model.MotoDTO;
 import co.edu.udistrital.model.Tarjeton;
 import co.edu.udistrital.model.PersonaDTO;
 import co.edu.udistrital.model.Voto;
-import co.edu.udistrital.model.ListaVotos;
 
 @Named
 @SessionScoped
