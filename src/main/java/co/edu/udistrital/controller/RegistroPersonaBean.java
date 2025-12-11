@@ -3,7 +3,6 @@ package co.edu.udistrital.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-
 import co.edu.udistrital.model.ListaVotos;
 import co.edu.udistrital.model.PersonaDTO;
 import co.edu.udistrital.model.Voto;
