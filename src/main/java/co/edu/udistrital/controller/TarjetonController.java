@@ -30,13 +30,11 @@ public class TarjetonController implements Serializable {
     private String cedulaVotante;
     private boolean mostrarTarjetones = false;
     private PersonaDTO personaActual;
-    private ListaVotos listaVotos;
 
     public TarjetonController() {
         tarjeton = new Tarjeton();
         tarjeton.cargarMotos();
         listaMotos = tarjeton.getMotos();
-        listaVotos = new ListaVotos(new ArrayList<>());
         tarjetonSeleccionado = null;
     }
 
@@ -154,14 +152,6 @@ public class TarjetonController implements Serializable {
 
     public void setMostrarTarjetones(boolean mostrarTarjetones) {
         this.mostrarTarjetones = mostrarTarjetones;
-    }
-
-    public ListaVotos getListaVotos() {
-        return listaVotos;
-    }
-
-    public void setListaVotos(ListaVotos listaVotos) {
-        this.listaVotos = listaVotos;
     }
 
     public PersonaDTO getPersonaActual() {
